@@ -1,6 +1,8 @@
 const express = require('express')
 const { engine: expressHandlebars } = require('express-handlebars')
 
+const fortune = require('./lib/fortune.js')
+
 const app = express()
 
 // Настройка представлений 
@@ -16,18 +18,10 @@ const port = process.env.PORT || 3000
 // Домашняя страница
 app.get('/', (req, res) => res.render('home'))
 
-const fortunes = [
-    "Ставь на Зеро, не прогадаешь.",
-    "Играй в Техас, шанс выиграть выше.",
-    "Ставь всё на черное.",
-    "Ставь всё на красное.",
-    "Пять карт, можно поменять, можно докупить одну - это Русски поккер."
-]
 
 // Страница О нас
 app.get('/about', (req, res) => { 
-    const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)]
-    res.render('about', { fortune: randomFortune })
+    res.render('about', { fortune: fortune.getFortune() })
 })
 
 // Пользовательская страница 404
